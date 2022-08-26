@@ -6,7 +6,7 @@ export const MainContainer = styled.div`
   background-color: white;
   padding: 50px;
 
-  @media (max-width: 600px) {
+  @media screen and (max-width: 600px) {
     padding: 10px;
   }
 `;

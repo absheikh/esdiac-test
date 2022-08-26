@@ -23,7 +23,7 @@ import { Text } from "../styles/text";
 import { Wrapper } from "../styles/wrapper";
 import { Notification } from "../styles/notification";
 import { API_URI } from "../const";
-
+import { isValidPhoneNumber } from "react-phone-number-input";
 const Register: NextPage = () => {
   const [firstname, setFirstName] = React.useState();
   const [lastname, setLastName] = React.useState();
@@ -96,10 +96,15 @@ const Register: NextPage = () => {
           });
           return;
         }
-        if (phone.length < 10) {
+        const handleValidate = (value: any) => {
+          const isValid = isValidPhoneNumber(value);
+          console.log({ isValid });
+          return isValid;
+        };
+        if (!handleValidate(phone)) {
           e.target[3].classList.add("invalid");
           setIsLoading(false);
-          toast.error("Phone number must be greater than 9", {
+          toast.error("Invalid Phone", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,

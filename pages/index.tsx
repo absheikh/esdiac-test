@@ -11,6 +11,7 @@ import { Div } from "../styles/div";
 import { FormContainer } from "../styles/formContainer";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import { toast } from "react-toastify";
 import { API_URI } from "../const";
 import { FormGroup } from "../styles/formGroup";
 import { FormColumn } from "../styles/formRow";
@@ -22,6 +23,7 @@ import { Text } from "../styles/text";
 import { Wrapper } from "../styles/wrapper";
 import { Notification } from "../styles/notification";
 import { useAuth } from "../shared/authContext";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 const Home: NextPage = () => {
   const { isAuthenticated, login, user, logout, isLoading } = useAuth();
@@ -49,6 +51,24 @@ const Home: NextPage = () => {
         // alert("Please fill all the fields");
       }
       error = false;
+    }
+    const handleValidate = (value: any) => {
+      const isValid = isValidPhoneNumber(value);
+      console.log({ isValid });
+      return isValid;
+    };
+    if (!handleValidate(phone)) {
+      e.target[0].classList.add("invalid");
+      toast.error("Invalid Phone number", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
     }
     if (!error) {
       console.log(phone, password);
