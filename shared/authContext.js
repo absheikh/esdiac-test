@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { toast } from "react-toastify";
 const AuthContext = createContext();
-import { API_URI, API_URL } from "../const";
+import { API_URI } from "../const";
 
 function AuthProvider({ children }) {
   const router = useRouter();
@@ -35,13 +35,12 @@ function AuthProvider({ children }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("data: ", data);
-        if (data) {
+        if (res.status === 200) {
           setUser(data.data);
-          console.log(data.data.firstname);
+          // console.log(data.data.firstname);
           setIsAuthenticated(true);
           localStorage.setItem("token", data.data.token);
-          toast.success("Welcome to you dashboard", {
+          toast.success("Welcome to your dashboard", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -51,7 +50,7 @@ function AuthProvider({ children }) {
             progress: undefined,
           });
           router.push("/main");
-        } else {
+        } else if (data.data.status === "error") {
           toast.error(data.message + "  Don't forget to add +", {
             position: "top-right",
             autoClose: 5000,
@@ -62,6 +61,7 @@ function AuthProvider({ children }) {
             progress: undefined,
           });
           // setUser(data);
+          console.log(data);
           setIsAuthenticated(false);
         }
         setIsLoading(false);
