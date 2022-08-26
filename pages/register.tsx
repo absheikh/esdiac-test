@@ -82,7 +82,7 @@ const Register: NextPage = () => {
             /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
           return !(email || regex.test(email) === false);
         };
-        if (email.length < 5) {
+        if (e.target[4] < 5) {
           e.target[4].classList.add("invalid");
           setIsLoading(false);
           toast.error("Invalid email", {
@@ -110,7 +110,7 @@ const Register: NextPage = () => {
           });
           return;
         }
-        if (password.length < 5) {
+        if (e.target[5].length < 5) {
           e.target[5].classList.add("invalid");
           setIsLoading(false);
           toast.error("Password must be greater than 5", {
