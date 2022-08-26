@@ -35,7 +35,8 @@ function AuthProvider({ children }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (res.status === 200) {
+        data.data.status === "error";
+        if (data.data.status === "error") {
           setUser(data.data);
           // console.log(data.data.firstname);
           setIsAuthenticated(true);
@@ -50,7 +51,7 @@ function AuthProvider({ children }) {
             progress: undefined,
           });
           router.push("/main");
-        } else if (data.data.status === "error") {
+        } else {
           toast.error(data.message + "  Don't forget to add +", {
             position: "top-right",
             autoClose: 5000,
