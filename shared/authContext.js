@@ -35,6 +35,7 @@ function AuthProvider({ children }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log("data: ", data);
         if (data.status === "error") {
           toast.error(data.message + "  Don't forget to add +", {
             position: "top-right",
