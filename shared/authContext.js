@@ -35,9 +35,22 @@ function AuthProvider({ children }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        data.data.status === "error";
-        if (data.data.status === "error") {
+        if (data.status === "error") {
+          toast.error(data.message + "  Don't forget to add +", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          // setUser(data);
+          console.log(data);
+          setIsAuthenticated(false);
+        } else {
           setUser(data.data);
+
           // console.log(data.data.firstname);
           setIsAuthenticated(true);
           localStorage.setItem("token", data.data.token);
@@ -51,20 +64,8 @@ function AuthProvider({ children }) {
             progress: undefined,
           });
           router.push("/main");
-        } else {
-          toast.error(data.message + "  Don't forget to add +", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          // setUser(data);
-          console.log(data);
-          setIsAuthenticated(false);
         }
+
         setIsLoading(false);
       })
       .catch((err) => {
